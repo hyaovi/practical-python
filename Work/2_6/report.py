@@ -8,8 +8,9 @@ def read_price(filename):
     with open(filename, "rt") as f:
         rows = csv.reader(f)
         for row in rows:
-            if len(row) == 2:
+            try:
                 name, price = row
-                prices[name] = price
-
+                prices[name] = float(price)
+            except ValueError:
+                pass
         return prices
