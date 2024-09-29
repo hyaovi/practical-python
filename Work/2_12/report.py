@@ -4,6 +4,7 @@ import csv
 
 
 def read_price(filename):
+    """read a price CSV file into a dict mapping name to price"""
     prices = {}
     with open(filename, "rt") as f:
         rows = csv.reader(f)
@@ -17,15 +18,18 @@ def read_price(filename):
 
 
 def read_portfolio(filename):
+    """
+    Read a portfolio into a list of dictionaries with keys: name, shares, price
+    """
     portfolio = []
     with open(filename, "rt") as f:
         rows = csv.reader(f)
         header = next(rows)
         for row in rows:
             stock = {
-                header[0]: row[0],
-                header[1]: int(row[1]),
-                header[2]: float(row[2]),
+                "name": row[0],
+                "shares": int(row[1]),
+                "price": float(row[2]),
             }
             portfolio.append(stock)
         return portfolio
@@ -46,12 +50,9 @@ def make_report(portfolio: list, prices: dict):
 
 
 def print_report(report):
-    print(
-        "{name:>10s} {shares:>10s} {price:>10s} {change:>10s}".format(
-            name="Name", shares="Shares", price="Prices", change="Changes"
-        )
-    )
-    print("{n:_>10s} {n:_>10s} {n:_>10s} {n:_>10s}".format(n="_"))
+    headers = ("Name", "Shares", "Prices", "Changes")
+    print("%10s %10s %10s %10s" % headers)
+    print(("_" * 10 + " ") * len(headers))
 
     for stock in report:
         name, shares, price, change = stock
