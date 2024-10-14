@@ -51,18 +51,18 @@ def print_report(report, formatter: tableformat.TableFormatter):
         # print(f"{name:>10s} {shares:>10d} {'$'+f'{price:0.2f}':>10s} {change:>10.2f}")
 
 
-def report_portfolio(portfolio_filename, price_filename):
+def report_portfolio(portfolio_filename, price_filename, fmt="txt"):
     portfolio = read_portfolio(portfolio_filename)
     prices = read_price(price_filename)
     report = make_report(portfolio=portfolio, prices=prices)
-    formatter = tableformat.HTMLTableFormatter()
+    formatter = tableformat.create_formatter(fmt)
     print_report(report, formatter)
 
 
 def main(argv):
-    if len(argv) != 3:
+    if len(argv) != 4:
         raise SystemExit("exist %s module" % argv[1:])
-    report_portfolio(argv[1], argv[2])
+    report_portfolio(argv[1], argv[2], argv[3])
 
 
 if __name__ == "__main__":
