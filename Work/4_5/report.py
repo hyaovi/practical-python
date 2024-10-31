@@ -10,15 +10,15 @@ def read_price(filename):
         return dict(parse_csv(lines=f, has_headers=False, types=[str, float]))
 
 
-def read_portfolio(filename):
+def read_portfolio(filename, **opt):
     """
     Read a portfolio into a list of dictionaries with keys: name, shares, price
     """
     with open(filename, "rt") as f:
         portfolio = parse_csv(
-            lines=f, select=["name", "shares", "price"], types=[str, int, float]
+            lines=f, select=["name", "shares", "price"], types=[str, int, float], **opt
         )
-        portfolio = [Stock(s["name"], s["shares"], s["price"]) for s in portfolio]
+        portfolio = [Stock(**s) for s in portfolio]
         return portfolio
 
 

@@ -17,7 +17,7 @@ def read_portfolio(filename):
         portfolio = parse_csv(
             lines=f, select=["name", "shares", "price"], types=[str, int, float]
         )
-        portfolio = [Stock(s["name"], s["shares"], s["price"]) for s in portfolio]
+        portfolio = [Stock(**s) for s in portfolio]
         return portfolio
 
 
